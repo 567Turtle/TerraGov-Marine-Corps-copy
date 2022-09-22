@@ -23,6 +23,7 @@
 	/// What is allowed to be equipped in suit storage
 	allowed = list(
 		/obj/item/weapon/gun,
+		/obj/item/instrument,
 		/obj/item/storage/belt/sparepouch,
 		/obj/item/storage/holster/blade,
 		/obj/item/weapon/claymore,
@@ -328,6 +329,10 @@
 
 /obj/item/clothing/suit/modular/xenonauten/heavy/tyr_two
 	starting_attachments = list(/obj/item/armor_module/module/tyr_extra_armor)
+
+/obj/item/clothing/suit/modular/xenonauten/heavy/surt
+	starting_attachments = list(/obj/item/armor_module/module/fire_proof, /obj/item/armor_module/storage/general)
+
 /** Core helmet module */
 /obj/item/clothing/head/modular
 	name = "Jaeger Pattern Helmet"
@@ -368,68 +373,7 @@
 	)
 
 	///optional assoc list of colors we can color this armor
-	var/list/colorable_colors = list(
-		"Default" = list(
-			"Drab" = ARMOR_PALETTE_DRAB,
-			"Brown" = ARMOR_PALETTE_BROWN,
-			"Snow" = ARMOR_PALETTE_SNOW,
-			"Desert" = ARMOR_PALETTE_DESERT,
-			"Black" = ARMOR_PALETTE_BLACK,
-			"Grey" = ARMOR_PALETTE_GREY,
-			"Gun Metal" = ARMOR_PALETTE_GUN_METAL,
-			"Night Slate" = ARMOR_PALETTE_NIGHT_SLATE,
-			"Fall" = ARMOR_PALETTE_FALL,
-		),
-		"Red" = list(
-			"Dark Red" = ARMOR_PALETTE_RED,
-			"Bronze Red" = ARMOR_PALETTE_BRONZE_RED,
-			"Red" = ARMOR_PALETTE_LIGHT_RED,
-			"Blood Red" = ARMOR_PALETTE_BLOOD_RED,
-		),
-		"Green" = list(
-			"Green" = ARMOR_PALETTE_GREEN,
-			"Emerald" = ARMOR_PALETTE_EMERALD,
-			"Lime" = ARMOR_PALETTE_LIME,
-			"Mint" = ARMOR_PALETTE_MINT,
-			"Jade" = ARMOR_PALETTE_JADE,
-			"Leaf" = ARMOR_PALETTE_LEAF,
-			"Forest" = ARMOR_PALETTE_FOREST,
-			"Smoked Green" = ARMOR_PALETTE_SMOKED_GREEN,
-		),
-		"Purple" = list(
-			"Purple" = ARMOR_PALETTE_PURPLE,
-			"Lavander" = ARMOR_PALETTE_LAVANDER,
-			"Lilac" = ARMOR_PALETTE_LILAC,
-			"Iris Purple" = ARMOR_PALETTE_IRIS_PURPLE,
-			"Orchid" = ARMOR_PALETTE_ORCHID,
-			"Grape" = ARMOR_PALETTE_GRAPE,
-		),
-		"Blue" = list(
-			"Dark Blue" = ARMOR_PALETTE_BLUE,
-			"Blue" = ARMOR_PALETTE_LIGHT_BLUE,
-			"Cottonwood" = ARMOR_PALETTE_COTTONWOOD,
-			"Aqua" = ARMOR_PALETTE_AQUA,
-			"Cerulean" = ARMOR_PALETTE_CERULEAN,
-			"Sea Blue" = ARMOR_PALETTE_SEA_BLUE,
-			"Cloud" = ARMOR_PALETTE_CLOUD,
-		),
-		"Yellow" = list(
-			"Gold" = ARMOR_PALETTE_YELLOW,
-			"Yellow" = ARMOR_PALETTE_LIGHT_YELLOW,
-			"Angelic Gold" = ARMOR_PALETTE_ANGELIC,
-			"Honey" = ARMOR_PALETTE_HONEY,
-		),
-		"Orange" = list(
-			"Orange" = ARMOR_PALETTE_ORANGE,
-			"Beige" = ARMOR_PALETTE_BEIGE,
-			"Earth" = ARMOR_PALETTE_EARTH,
-		),
-		"Pink" = list(
-			"Salmon" = ARMOR_PALETTE_SALMON_PINK,
-			"Magenta" = ARMOR_PALETTE_MAGENTA_PINK,
-			"Sakura" = ARMOR_PALETTE_SAKURA,
-		),
-	)
+	var/list/colorable_colors = ARMOR_PALETTES_LIST
 	///Some defines to determin if the armor piece is allowed to be recolored.
 	var/colorable_allowed = COLOR_WHEEL_NOT_ALLOWED
 	///Pixel offset on the X axis for how the helmet sits on the mob without a visor.
@@ -841,8 +785,7 @@
 		/obj/item/armor_module/module/better_shoulder_lamp,
 		/obj/item/armor_module/module/valkyrie_autodoc,
 		/obj/item/armor_module/module/fire_proof,
-		/obj/item/armor_module/module/tyr_extra_armor,
-		/obj/item/armor_module/module/tyr_extra_armor/mark1,
+		/obj/item/armor_module/module/tyr_extra_armor/som,
 		/obj/item/armor_module/module/mimir_environment_protection,
 		/obj/item/armor_module/module/mimir_environment_protection/mark1,
 		/obj/item/armor_module/module/hlin_explosive_armor,
@@ -890,6 +833,9 @@
 	item_state = "som_heavy"
 	slowdown = 0.7
 
+/obj/item/clothing/suit/modular/som/heavy/lorica
+	starting_attachments = list(/obj/item/armor_module/module/tyr_extra_armor/som)
+
 /obj/item/clothing/suit/modular/som/heavy/leader
 	name = "\improper SOM Gorgon pattern assault armor"
 	desc = "A bulky suit of heavy combat armor, the M-35 'Gorgon' armour provides the user with superior protection without severely impacting mobility. Typically seen on SOM leaders or their most elite combat units due to the significant construction and maintenance requirements. You'll need serious firepower to punch through this. Alt-Click to remove attached items. Use it to toggle the built-in flashlight."
@@ -926,7 +872,7 @@
 
 	flags_armor_protection = HEAD|FACE|EYES
 	attachments_allowed = list(
-		/obj/item/armor_module/module/tyr_head,
+		/obj/item/armor_module/module/tyr_head/som,
 		/obj/item/armor_module/module/mimir_environment_protection/mimir_helmet,
 		/obj/item/armor_module/module/mimir_environment_protection/mimir_helmet/mark1,
 		/obj/item/armor_module/module/welding,
@@ -963,3 +909,6 @@
 	icon_state = "som_helmet"
 	item_state = "som_helmet"
 	soft_armor = list("melee" = 50, "bullet" = 75, "laser" = 65, "energy" = 65, "bomb" = 50, "bio" = 50, "rad" = 65, "fire" = 60, "acid" = 55)
+
+/obj/item/clothing/head/modular/som/veteran/lorica
+	starting_attachments = list(/obj/item/armor_module/storage/helmet, /obj/item/armor_module/module/tyr_head/som)
