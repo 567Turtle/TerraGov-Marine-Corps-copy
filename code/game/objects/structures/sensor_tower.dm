@@ -126,13 +126,13 @@
 	if(already_activated)
 		balloon_alert(user, "There's already a sensor tower being activated!")
 		return
-	balloon_alert_to_viewers("You start to activate this sensor tower!")
+	balloon_alert_to_viewers("Activating sensor tower...")
 	if(!do_after(user, activate_time, TRUE, src))
 		return
 	if(already_activated)
 		balloon_alert(user, "There's already a sensor tower being activated!")
 		return
-	balloon_alert_to_viewers("You activate this sensor tower!")
+	balloon_alert_to_viewers("Sensor tower activated!")
 	begin_activation()
 
 ///Starts timer and sends an alert
@@ -140,9 +140,9 @@
 	for(var/mob/living/carbon/human/human AS in GLOB.alive_human_list)
 		human.playsound_local(human, "sound/effects/CIC_order.ogg", 10, 1)
 		if(human.faction == FACTION_TERRAGOV)
-			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is being activated, get ready to defend it team!", /obj/screen/text/screen_text/picture/potrait)
+			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is being activated, get ready to defend it team!", /atom/movable/screen/text/screen_text/picture/potrait)
 		else
-			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is being activated, deactivate it!", /obj/screen/text/screen_text/picture/potrait/som_over)
+			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is being activated, deactivate it!", /atom/movable/screen/text/screen_text/picture/potrait/som_over)
 
 	current_timer = addtimer(CALLBACK(src, .proc/finish_activation), generate_time, TIMER_STOPPABLE)
 	already_activated = TRUE
@@ -160,9 +160,9 @@
 	for(var/mob/living/carbon/human/human AS in GLOB.alive_human_list)
 		human.playsound_local(human, "sound/effects/CIC_order.ogg", 10, 1)
 		if(human.faction == FACTION_TERRAGOV)
-			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is fully activated, timer increased by 7 minutes.", /obj/screen/text/screen_text/picture/potrait)
+			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is fully activated, timer increased by 7 minutes.", /atom/movable/screen/text/screen_text/picture/potrait)
 		else
-			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is fully activated, stop further towers from being activated!", /obj/screen/text/screen_text/picture/potrait/som_over)
+			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] is fully activated, stop further towers from being activated!", /atom/movable/screen/text/screen_text/picture/potrait/som_over)
 	var/datum/game_mode/combat_patrol/sensor_capture/mode = SSticker.mode
 	mode.sensors_activated += 1
 	var/current_time = timeleft(mode.game_timer)
@@ -177,9 +177,9 @@
 	already_activated = FALSE
 	for(var/mob/living/carbon/human/human AS in GLOB.alive_human_list)
 		if(human.faction == FACTION_TERRAGOV)
-			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] activation process has been stopped<br>" + ",rally up and get it together team!", /obj/screen/text/screen_text/picture/potrait)
+			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] activation process has been stopped<br>" + ",rally up and get it together team!", /atom/movable/screen/text/screen_text/picture/potrait)
 		else
-			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] activation process has been stopped, glory to Mars!", /obj/screen/text/screen_text/picture/potrait/som_over)
+			human.play_screen_text("<span class='maptext' style=font-size:24pt;text-align:left valign='top'><u>OVERWATCH</u></span><br>" + "[src] activation process has been stopped, glory to Mars!", /atom/movable/screen/text/screen_text/picture/potrait/som_over)
 
 		human.playsound_local(human, "sound/effects/CIC_order.ogg", 10, 1)
 	update_icon()

@@ -142,7 +142,7 @@ Your squaddies will look to you when it comes to construction in the field of ba
 		<b>Duty</b>: Tend the injuries of your fellow marines or related personnel, keep them at fighting strength.
 	"}
 
-datum/job/som/squad/medic/radio_help_message(mob/M)
+/datum/job/som/squad/medic/radio_help_message(mob/M)
 	. = ..()
 	to_chat(M, {"\nYou must tend the wounds of your squad mates and make sure they are healthy and active.
 You may not be a fully-fledged doctor, but you stand between life and death when it matters."})
@@ -698,7 +698,7 @@ You are also in charge of communicating with command and letting them know about
 	wear_suit = /obj/item/clothing/suit/modular/som/heavy/leader/valk
 	gloves = /obj/item/clothing/gloves/marine/som/veteran
 	mask = /obj/item/clothing/mask/gas
-	head = /obj/item/clothing/head/modular/som/veteran
+	head = /obj/item/clothing/head/modular/som/leader
 	glasses = /obj/item/clothing/glasses/hud/health
 	r_store = /obj/item/storage/pouch/pistol/som
 	l_store = /obj/item/storage/pouch/grenade/som/ert
