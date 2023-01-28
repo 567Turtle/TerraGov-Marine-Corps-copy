@@ -21,7 +21,7 @@
 	var/junction = 0 //Because everything is terrible, I'm making this a window-level var
 	var/damageable = TRUE
 	var/deconstructable = TRUE
-	throwpass = FALSE
+	flags_pass = PASSLASER
 
 //I hate this as much as you do
 /obj/structure/window/full
@@ -135,7 +135,7 @@
 			if(GRAB_PASSIVE)
 				M.visible_message(span_warning("[user] slams [M] against \the [src]!"))
 				log_combat(user, M, "slammed", "", "against \the [src]")
-				M.apply_damage(7)
+				M.apply_damage(7, blocked = MELEE)
 				UPDATEHEALTH(M)
 				take_damage(10)
 			if(GRAB_AGGRESSIVE)
@@ -143,14 +143,14 @@
 				log_combat(user, M, "bashed", "", "against \the [src]")
 				if(prob(50))
 					M.Paralyze(20)
-				M.apply_damage(10)
+				M.apply_damage(10, blocked = MELEE)
 				UPDATEHEALTH(M)
 				take_damage(25)
 			if(GRAB_NECK)
 				M.visible_message(span_danger("<big>[user] crushes [M] against \the [src]!</big>"))
 				log_combat(user, M, "crushed", "", "against \the [src]")
 				M.Paralyze(10 SECONDS)
-				M.apply_damage(20)
+				M.apply_damage(20, blocked = MELEE)
 				UPDATEHEALTH(M)
 				take_damage(50)
 
@@ -309,6 +309,15 @@
 	///are we tinted or not
 	var/tinted = FALSE
 
+/obj/structure/window/reinforced/north
+	dir = NORTH
+
+/obj/structure/window/reinforced/west
+	dir = WEST
+
+/obj/structure/window/reinforced/east
+	dir = EAST
+
 /obj/structure/window/reinforced/Initialize(mapload)
 	. = ..()
 	if(dir == NORTH)
@@ -420,6 +429,9 @@
 
 /obj/structure/window/framed/mainship/escapeshuttle
 	smoothing_groups = SMOOTH_ESCAPESHUTTLE
+
+/obj/structure/window/framed/mainship/escapeshuttle/prison
+	resistance_flags = RESIST_ALL
 
 /obj/structure/window/framed/mainship/toughened
 	name = "safety glass"

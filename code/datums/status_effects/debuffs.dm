@@ -9,10 +9,12 @@
 	alert_type = null
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
+	if(new_owner.status_flags & GODMODE)
+		qdel(src)
+		return
 	if(isnum(set_duration))
 		duration = set_duration
 	return ..()
-
 
 //STUN
 /datum/status_effect/incapacitating/stun
@@ -377,7 +379,7 @@
 	owner.adjustFireLoss(40)
 
 ///irradiated mob
-/datum/status_effect/irradiated
+/datum/status_effect/incapacitating/irradiated
 	id = "irradiated"
 	status_type = STATUS_EFFECT_REFRESH
 	tick_interval = 20
@@ -385,19 +387,17 @@
 	///Some effects only apply to carbons
 	var/mob/living/carbon/carbon_owner
 
-/datum/status_effect/irradiated/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
+/datum/status_effect/incapacitating/irradiated/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	if(.)
 		if(iscarbon(owner))
 			carbon_owner = owner
 
-/datum/status_effect/irradiated/Destroy()
+/datum/status_effect/incapacitating/irradiated/Destroy()
 	carbon_owner = null
 	return ..()
 
-/datum/status_effect/irradiated/tick()
+/datum/status_effect/incapacitating/irradiated/tick()
 	var/mob/living/living_owner = owner
 	//Roulette of bad things
 	if(prob(15))
@@ -418,3 +418,72 @@
 	name = "Irradiated"
 	desc = "You've been irradiated! The effects of the radiation will continue to harm you until purged from your system."
 	icon_state = "radiation"
+
+// ***************************************
+// *********** Intoxicated
+// ***************************************
+/datum/status_effect/stacking/intoxicated
+	id = "intoxicated"
+	tick_interval = 2 SECONDS
+	stacks = 1
+	max_stacks = 30
+	consumed_on_threshold = FALSE
+	/// Owner of the debuff is limited to carbons.
+	var/mob/living/carbon/debuff_owner
+	/// Used for particles. Holds the particles instead of the mob. See particle_holder for documentation.
+	var/obj/effect/abstract/particle_holder/particle_holder
+
+/datum/status_effect/stacking/intoxicated/can_gain_stacks()
+	if(owner.status_flags & GODMODE)
+		return FALSE
+	return ..()
+
+/datum/status_effect/stacking/intoxicated/on_creation(mob/living/new_owner, stacks_to_apply)
+	if(new_owner.status_flags & GODMODE)
+		qdel(src)
+		return
+	. = ..()
+	debuff_owner = new_owner
+	RegisterSignal(debuff_owner, COMSIG_LIVING_DO_RESIST, .proc/call_resist_debuff)
+	debuff_owner.balloon_alert(debuff_owner, "Intoxicated")
+	playsound(debuff_owner.loc, "sound/bullets/acid_impact1.ogg", 30)
+	particle_holder = new(debuff_owner, /particles/toxic_slash)
+	particle_holder.particles.spawning = 1 + round(stacks / 2)
+	particle_holder.pixel_x = -2
+	particle_holder.pixel_y = 0
+	if(HAS_TRAIT(debuff_owner, TRAIT_INTOXICATION_RESISTANT) || (debuff_owner.get_soft_armor(BIO) >= 65))
+		stack_decay = 2
+
+/datum/status_effect/stacking/intoxicated/on_remove()
+	UnregisterSignal(debuff_owner, COMSIG_LIVING_DO_RESIST)
+	debuff_owner = null
+	QDEL_NULL(particle_holder)
+	return ..()
+
+/datum/status_effect/stacking/intoxicated/tick()
+	. = ..()
+	if(!debuff_owner)
+		return
+	if(HAS_TRAIT(debuff_owner, TRAIT_INTOXICATION_RESISTANT) || (debuff_owner.get_soft_armor(BIO) > 65))
+		stack_decay = 2
+	var/debuff_damage = SENTINEL_INTOXICATED_BASE_DAMAGE + round(stacks / 10)
+	debuff_owner.adjustFireLoss(debuff_damage)
+	playsound(debuff_owner.loc, "sound/bullets/acid_impact1.ogg", 4)
+	particle_holder.particles.spawning = 1 + round(stacks / 2)
+	if(stacks >= 20)
+		debuff_owner.adjust_slowdown(1)
+		debuff_owner.adjust_stagger(1)
+
+/// Called when the debuff's owner uses the Resist action for this debuff.
+/datum/status_effect/stacking/intoxicated/proc/call_resist_debuff()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/resist_debuff) // grilled cheese sandwich
+
+/// Resisting the debuff will allow the debuff's owner to remove some stacks from themselves.
+/datum/status_effect/stacking/intoxicated/proc/resist_debuff()
+	if(!do_after(debuff_owner, 3 SECONDS, TRUE, debuff_owner, BUSY_ICON_GENERIC))
+		debuff_owner.balloon_alert("Interrupted")
+		return
+	playsound(debuff_owner.loc, 'sound/effects/slosh.ogg', 30)
+	debuff_owner.balloon_alert("Succeeded")
+	stacks -= SENTINEL_INTOXICATED_RESIST_REDUCTION
