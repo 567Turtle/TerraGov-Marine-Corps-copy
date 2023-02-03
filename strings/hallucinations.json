@@ -3,12 +3,7 @@
 		"@pick(add_name)i'm watching you...",
 		"@pick(add_name)i know what you're doing",
 		"@pick(add_name)what are you hiding?",
-		"I saw that"
-	],
 
-	"conversation": [
-		"Yes",
-		"Yeah",
 		"Yup",
 		"No",
 		"Nah",
