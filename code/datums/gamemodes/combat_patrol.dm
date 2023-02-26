@@ -1,8 +1,7 @@
 /datum/game_mode/combat_patrol
 	name = "Combat Patrol"
 	config_tag = "Combat Patrol"
-	flags_round_type = MODE_LZ_SHUTTERS|MODE_TWO_HUMAN_FACTIONS|MODE_HUMAN_ONLY|MODE_SOM_OPFOR //MODE_NO_PERMANENT_WOUNDS is for nerds
-	flags_landmarks = MODE_LANDMARK_SPAWN_SPECIFIC_SHUTTLE_CONSOLE
+	flags_round_type = MODE_LATE_OPENING_SHUTTER_TIMER|MODE_TWO_HUMAN_FACTIONS|MODE_HUMAN_ONLY|MODE_TWO_HUMAN_FACTIONS
 	shutters_drop_time = 3 MINUTES
 	flags_xeno_abilities = ABILITY_CRASH
 	time_between_round = 0 HOURS
@@ -21,7 +20,7 @@
 	)
 	whitelist_ship_maps = list(MAP_COMBAT_PATROL_BASE)
 	blacklist_ship_maps = null
-	blacklist_ground_maps = list(MAP_WHISKEY_OUTPOST)
+	blacklist_ground_maps = list(MAP_WHISKEY_OUTPOST, MAP_OSCAR_OUTPOST)
 	/// Timer used to calculate how long till round ends
 	var/game_timer
 	///The length of time until round ends.
@@ -36,6 +35,7 @@
 	var/bioscan_interval = 3 MINUTES
 	///Delay from shutter drop until game timer starts
 	var/game_timer_delay = 5 MINUTES
+
 
 /datum/game_mode/combat_patrol/post_setup()
 	. = ..()
