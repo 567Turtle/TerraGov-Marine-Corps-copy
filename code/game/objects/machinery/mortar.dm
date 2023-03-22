@@ -265,9 +265,9 @@
 		fall_time = 0.5 SECONDS
 	impact_cam.forceMove(get_turf(target))
 	current_shots++
-	addtimer(CALLBACK(src, .proc/falling, target, shell), fall_time)
-	addtimer(CALLBACK(src, .proc/return_cam), fall_time + 2 SECONDS)
-	addtimer(CALLBACK(src, .proc/cool_off), cool_off_time)
+	addtimer(CALLBACK(src, PROC_REF(falling), target, shell), fall_time)
+	addtimer(CALLBACK(src, PROC_REF(return_cam)), fall_time + 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(cool_off)), cool_off_time)
 
 ///Proc called by tactical binoculars to send targeting information.
 /obj/machinery/deployable/mortar/proc/recieve_target(turf/T, mob/user)
@@ -362,7 +362,7 @@
 	for(var/i = 1 to amount_to_fire)
 		var/turf/impact_turf = pick(turf_list)
 		in_chamber = chamber_items[next_chamber_position]
-		addtimer(CALLBACK(src, .proc/begin_fire, impact_turf, in_chamber), fire_delay * i)
+		addtimer(CALLBACK(src, PROC_REF(begin_fire), impact_turf, in_chamber), fire_delay * i)
 		next_chamber_position--
 		chamber_items -= in_chamber
 		QDEL_NULL(in_chamber)
@@ -393,7 +393,7 @@
 
 /obj/item/mortar_kit/Initialize()
 	. = ..()
-	AddElement(/datum/element/deployable_item, deployable_item, type, 1 SECONDS)
+	AddElement(/datum/element/deployable_item, deployable_item, 1 SECONDS)
 
 /obj/item/mortar_kit/attack_self(mob/user)
 	do_unique_action(user)

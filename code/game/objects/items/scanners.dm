@@ -80,9 +80,9 @@ REAGENT SCANNER
 
 /obj/item/healthanalyzer/attack(mob/living/carbon/M, mob/living/user)
 	. = ..()
-	if(user.skills.getRating("medical") < skill_threshold)
+	if(user.skills.getRating(SKILL_MEDICAL) < skill_threshold)
 		to_chat(user, span_warning("You start fumbling around with [src]..."))
-		if(!do_mob(user, M, max(SKILL_TASK_AVERAGE - (1 SECONDS * user.skills.getRating("medical")), 0), BUSY_ICON_UNSKILLED))
+		if(!do_mob(user, M, max(SKILL_TASK_AVERAGE - (1 SECONDS * user.skills.getRating(SKILL_MEDICAL)), 0), BUSY_ICON_UNSKILLED))
 			return
 	playsound(src.loc, 'sound/items/healthanalyzer.ogg', 50)
 	if(CHECK_BITFIELD(M.species.species_flags, NO_SCAN))
@@ -96,7 +96,7 @@ REAGENT SCANNER
 	current_user = user
 	ui_interact(user)
 	update_static_data(user)
-	if(user.skills.getRating("medical") < upper_skill_threshold)
+	if(user.skills.getRating(SKILL_MEDICAL) < upper_skill_threshold)
 		return
 	START_PROCESSING(SSobj, src)
 
@@ -249,6 +249,38 @@ REAGENT SCANNER
 	name = "\improper HF2 integrated health analyzer"
 	desc = "A body scanner able to distinguish vital signs of the subject. This model has been integrated into another object, and is simpler to use."
 	skill_threshold = SKILL_MEDICAL_UNTRAINED
+
+/obj/item/healthanalyzer/gloves
+	name = "\improper HF2 Medical Gloves"
+	desc = "Advanced medical gloves, these include a built-in analyzer to quickly scan patients."
+	icon_state = "medscan_gloves"
+	item_state = "medscan_gloves"
+	flags_equip_slot = ITEM_SLOT_GLOVES
+	w_class = WEIGHT_CLASS_SMALL
+	icon = 'icons/obj/clothing/gloves.dmi'
+	item_state_worn = TRUE
+	siemens_coefficient = 0.50
+	blood_sprite_state = "bloodyhands"
+	flags_armor_protection = HANDS
+	flags_equip_slot = ITEM_SLOT_GLOVES
+	attack_verb = "scans"
+	soft_armor = list(MELEE = 25, BULLET = 15, LASER = 10, ENERGY = 15, BOMB = 15, BIO = 5, FIRE = 15, ACID = 15)
+	flags_cold_protection = HANDS
+	flags_heat_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
+
+/obj/item/healthanalyzer/gloves/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(user.gloves == src)
+		RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	else
+		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+
+//when you are wearing these gloves, this will call the normal attack code to health scan the target
+/obj/item/healthanalyzer/gloves/proc/on_unarmed_attack(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(istype(user) && istype(target))
+		attack(target,user)
 
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels."

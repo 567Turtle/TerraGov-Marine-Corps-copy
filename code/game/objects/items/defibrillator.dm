@@ -91,7 +91,7 @@
 		return
 
 	//Job knowledge requirement
-	var/skill = user.skills.getRating("medical")
+	var/skill = user.skills.getRating(SKILL_MEDICAL)
 	if(skill < SKILL_MEDICAL_PRACTICED)
 		user.visible_message(span_notice("[user] fumbles around figuring out how to use [src]."),
 		span_notice("You fumble around figuring out how to use [src]."))
@@ -116,7 +116,7 @@
 		UnregisterSignal(dcell, COMSIG_PARENT_QDELETING)
 	dcell = new_cell
 	if(dcell)
-		RegisterSignal(dcell, COMSIG_PARENT_QDELETING, .proc/on_cell_deletion)
+		RegisterSignal(dcell, COMSIG_PARENT_QDELETING, PROC_REF(on_cell_deletion))
 
 
 ///Called by the deletion of the referenced powercell.
@@ -161,7 +161,7 @@
 	var/defib_heal_amt = damage_threshold
 
 	//job knowledge requirement
-	var/skill = user.skills.getRating("medical")
+	var/skill = user.skills.getRating(SKILL_MEDICAL)
 	if(skill < SKILL_MEDICAL_PRACTICED)
 		user.visible_message(span_notice("[user] fumbles around figuring out how to use [src]."),
 		span_notice("You fumble around figuring out how to use [src]."))
@@ -344,7 +344,7 @@
 /obj/item/defibrillator/gloves/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(user.gloves == src)
-		RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
+		RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 	else
 		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 

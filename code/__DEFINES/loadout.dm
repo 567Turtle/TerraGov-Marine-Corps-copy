@@ -87,7 +87,6 @@ GLOBAL_LIST_INIT(medic_gear_listed_products, list(
 		/obj/effect/vendor_bundle/medic = list(CAT_ESS, "Essential Medic Set", 0, "white"),
 		/obj/item/storage/pill_bottle/meralyne = list(CAT_MEDSUP, "Meralyne pills", 16, "orange"),
 		/obj/item/storage/pill_bottle/dermaline = list(CAT_MEDSUP, "Dermaline pills", 16, "orange"),
-		/obj/item/storage/pill_bottle/paracetamol = list(CAT_MEDSUP, "Paracetamol pills", 8, "black"),
 		/obj/item/storage/syringe_case/meralyne = list(CAT_MEDSUP, "syringe Case (120u Meralyne)", 16, "black"),
 		/obj/item/reagent_containers/hypospray/advanced/meralyne = list(CAT_MEDSUP, "hypospray (60u Meralyne)", 8, "black"), //half the units of the mera case half the price
 		/obj/item/storage/syringe_case/dermaline = list(CAT_MEDSUP, "syringe Case (120u Dermaline)", 16, "black"),
@@ -104,6 +103,7 @@ GLOBAL_LIST_INIT(medic_gear_listed_products, list(
 		/obj/item/reagent_containers/hypospray/advanced = list(CAT_MEDSUP, "Hypospray", 2, "orange"),
 		/obj/item/reagent_containers/hypospray/advanced/big = list(CAT_MEDSUP, "Big hypospray", 10, "orange"),
 		/obj/item/clothing/glasses/hud/health = list(CAT_MEDSUP, "Medical HUD glasses", 2, "black"),
+		/obj/item/healthanalyzer/gloves = list(CAT_MEDSUP, "Health scanner gloves", 2, "black"),
 		/obj/item/defibrillator/gloves = list(CAT_MEDSUP, "Advanced medical gloves", 5, "black"),
 	))
 
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(leader_gear_listed_products, list(
 		/obj/item/explosive/grenade/chem_grenade/razorburn_large = list(CAT_LEDSUP, "Razorburn canister", 21, "black"),
 		/obj/item/explosive/grenade/chem_grenade/razorburn_smol = list(CAT_LEDSUP, "Razorburn grenade", 6, "black"),
 		/obj/item/weapon/gun/flamer/big_flamer/marinestandard = list(CAT_LEDSUP, "FL-84 flamethrower", 12, "black"),
-		/obj/item/ammo_magazine/flamer_tank = list(CAT_LEDSUP, "Flamethrower tank", 4, "black"),
+		/obj/item/ammo_magazine/flamer_tank/large = list(CAT_LEDSUP, "Flamethrower tank", 4, "black"),
 		/obj/item/storage/backpack/marine/radiopack = list(CAT_LEDSUP, "Radio Pack", 15, "black"),
 		/obj/item/weapon/gun/revolver/standard_magnum = list(CAT_LEDSUP, "R-76 Magnum", 12, "black"),
 		/obj/item/storage/firstaid/adv = list(CAT_LEDSUP, "Advanced firstaid kit", 10, "orange"),
@@ -582,7 +582,7 @@ GLOBAL_LIST_INIT(synthetic_clothes_listed_products, list(
 		/obj/item/clothing/suit/wcoat = list(CAT_SMR, "Waistcoat", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/wizrobe/gentlecoat = list(CAT_SMR, "Gentleman's Coat", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/bomber = list(CAT_SMR, "Bomber Jacket", 0, "synth-cosmetic"),
-		/obj/item/clothing/suit/security/navyhos = list(CAT_SMR, "Navy HoS Jacket", 0, "synth-cosmetic"),
+		/obj/item/clothing/suit/security/formal/senior_officer = list(CAT_SMR, "Navy HoS Jacket", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/chef/classic = list(CAT_SMR, "Classic Chef vest", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/ianshirt = list(CAT_SMR, "Ian Shirt", 0, "synth-cosmetic"),
 		/obj/item/clothing/suit/suspenders = list(CAT_SMR, "Suspenders", 0, "synth-cosmetic"),

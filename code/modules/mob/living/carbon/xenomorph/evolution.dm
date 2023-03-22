@@ -57,6 +57,9 @@
 /mob/living/carbon/xenomorph/proc/do_evolve(caste_type, forced_caste_name, regression = FALSE)
 	if(!generic_evolution_checks())
 		return
+	
+	if(caste_type == /mob/living/carbon/xenomorph/hivemind && tgui_alert(src, "You are about to evolve into a hivemind, which places its core on the tile you're on when evolving. This core cannot be moved and you cannot regress. Are you sure you would like to place your core here?", "Evolving to hivemind", list("Yes", "No"), FALSE) == "No")
+		return
 
 	var/new_mob_type
 	var/castepick
@@ -176,7 +179,7 @@
 	var/atom/movable/screen/zone_sel/selector = new_xeno.hud_used?.zone_sel
 	selector?.set_selected_zone(zone_selected, new_xeno)
 	qdel(src)
-	INVOKE_ASYNC(new_xeno, /mob/living.proc/do_jitter_animation, 1000)
+	INVOKE_ASYNC(new_xeno, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1000)
 
 ///Check if the xeno is currently able to evolve
 /mob/living/carbon/xenomorph/proc/generic_evolution_checks()
@@ -210,7 +213,7 @@
 		balloon_alert(src, "The restraints are too restricting to allow us to evolve")
 		return FALSE
 
-	if(isnull(xeno_caste.evolves_to))
+	if(isnull(xeno_caste.evolves_to) || !(xeno_caste.caste_flags & CASTE_EVOLUTION_ALLOWED) || HAS_TRAIT(src, TRAIT_VALHALLA_XENO))
 		balloon_alert(src, "We are already the apex of form and function. Let's go forth and spread the hive!")
 		return FALSE
 
@@ -290,6 +293,8 @@
 				new_mob_type = /mob/living/carbon/xenomorph/queen/Zeta
 			if(XENO_HIVE_ADMEME)
 				new_mob_type = /mob/living/carbon/xenomorph/queen/admeme
+			if(XENO_HIVE_FALLEN)
+				new_mob_type = /mob/living/carbon/xenomorph/queen/Corrupted/fallen
 
 	if(!regression)
 		if(new_caste_type.tier == XENO_TIER_TWO && no_room_tier_two)
