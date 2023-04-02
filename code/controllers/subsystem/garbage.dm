@@ -191,11 +191,11 @@ SUBSYSTEM_DEF(garbage)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
 				if(reference_find_on_fail[refID])
-					INVOKE_ASYNC(D, /datum/proc/find_references)
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references))
 					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					INVOKE_ASYNC(D, /datum/proc/find_references)
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references))
 					ref_searching = TRUE
 				#endif
 				reference_find_on_fail -= refID
@@ -289,7 +289,7 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/Recover()
 	if (istype(SSgarbage.queues))
-		for (var/i in 1 to SSgarbage.queues.len)
+		for (var/i in 1 to length(SSgarbage.queues))
 			queues[i] |= SSgarbage.queues[i]
 
 /// Qdel Item: Holds statistics on each type that passes thru qdel

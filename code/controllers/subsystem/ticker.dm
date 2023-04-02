@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(ticker)
 
 	for(var/themes in reboot_sounds)
 		possible_themes += themes
-	if(possible_themes.len)
+	if(length(possible_themes))
 		return "[global.config.directory]/lobby_themes/[pick(possible_themes)]"
 
 
@@ -121,7 +121,7 @@ SUBSYSTEM_DEF(ticker)
 				GLOB.ooc_allowed = TRUE
 				GLOB.dooc_allowed = TRUE
 				mode.declare_completion(force_ending)
-				addtimer(CALLBACK(SSvote, /datum/controller/subsystem/vote/proc/automatic_vote), 2 SECONDS)
+				addtimer(CALLBACK(SSvote, TYPE_PROC_REF(/datum/controller/subsystem/vote, automatic_vote)), 2 SECONDS)
 				addtimer(CALLBACK(src, PROC_REF(Reboot)), CONFIG_GET(number/vote_period) * 3 + 9 SECONDS)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				for(var/client/C AS in GLOB.clients)
@@ -400,5 +400,5 @@ SUBSYSTEM_DEF(ticker)
 
 	for(var/themes in reboot_sounds)
 		possible_themes += themes
-	if(possible_themes.len)
+	if(length(possible_themes))
 		return "[global.config.directory]/reboot_themes/[pick(possible_themes)]"

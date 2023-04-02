@@ -485,3 +485,39 @@
   ivanmixo:
   - balance: River slows the amount its supposed to again
   - bugfix: Snow actually doesn't slow xenos down
+2023-03-30:
+  Lumipharon:
+  - code_imp: reorganised item inhand sprites
+  - bugfix: fixed some issues with quick equip for hat and boot storage
+  - code_imp: Improved quick equip code somewhat
+  - bugfix: Minor fix to the anti-stalemate system
+  - bugfix: fixed some invisible ERT armor
+  - bugfix: Added a few missing items on a couple of SOM ERT loadouts
+  carlarctg:
+  - qol: Halved attaching delay for most things, except anything that has it overriden
+      such as guns.
+  - qol: Halved the delay for taking modules out, 3s -> 1.5s.
+  - qol: Allowed you to take off modules without taking the armor off, but it doubles
+      it back to its normal 3s value.
+  - qol: Added a sprite to signify you've hooked a gun to your harness.
+  ivanmixo:
+  - bugfix: Fixed mobs getting stuck on eachother and other mobs when moving diagonally
+  - bugfix: Fixes window and window frame weeds transferring the click to the frame/window
+      below
+  - code_imp: Removed some weed window frame copypasta
+2023-03-31:
+  DeltaFire15:
+  - bugfix: Overwatch consoles should no longer brick under certain eye-deletion related
+      conditions.
+  - balance: Tad's landing cam view has minimap access.
+  QualityVan:
+  - bugfix: Moved the actual necrosis removal of surgery back to the second step,
+      rendering it possible to perform once again
+  Skye:
+  - bugfix: fixes the ICC medic spawn. It's Space...Somewhere, not 1940s Russia.
+  ivanmixo:
+  - code_imp: Replaced usages of .len with length() where applicable
+  - balance: Dropship fabricators now earn 30 and 15 points from respective miners.
+  - rscdel: Removed the dropship points voulcher
+  novaepee:
+  - imageadd: New Vali object and mob sprites
